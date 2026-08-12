@@ -1,0 +1,11 @@
+python faz polimorfismo sem a necessidade de herança
+
+FUNCTION OVERLOAD
+len("Gustavo") -> se comporta de uma forma, retorna 7
+len("sandy","junior") - se comporta de outra forma, retorna 2
+
+OPERATOR OVERLOAD
++ 5 -> adiciona 5
+5 + 4 -> soma 5 e 4
+'poli' + 'morfismo' -> junta os caracteres -> 'polimorfismo'
+
