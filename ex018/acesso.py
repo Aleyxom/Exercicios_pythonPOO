@@ -19,7 +19,11 @@ try: #boas práticas
         for total, amigo in enumerate(cur, start=1):
             print(f"{amigo['nome']} nasceu em {amigo['nascimento']}")
 
-        print(f"Ao todo encontrei {total} amigos com '{busca}'")
+        if total == 0:
+            print(f"Não encontrei nenhum registro com: '{busca}'")
+        else:
+            print(f"Encontrei {total} resultados com '{busca}'")
+
 
 except sqlite3 as erro:
     print(f"Falha no banco: {erro}")
@@ -36,7 +40,7 @@ except Exception as erro:
 # DESAFIO #
 # Adapte o código do exercício para que a saída do script:
 
-# mostre uma msg caso não seja achado nenhum registro.
+# mostre uma msg caso não seja achado nenhum registro. FEITO
 # trate as datas inválidas e vazias.
 # mostre a data formatada corretamente.
 # mostre a idade real da pessoa.
