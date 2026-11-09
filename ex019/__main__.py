@@ -1,4 +1,4 @@
-from turtledemo.paint import switchupdown
+from Exercicios_pythonPOO.ex019.crud import *
 
 
 def exibir_menu():
@@ -14,21 +14,30 @@ def exibir_menu():
     print("=" * 30)
 
 def main():
+    if not criar_banco():
+        print("Algo de errado aconteceu com o banco de dados!")
+        raise SystemExit
+
     while True:
         exibir_menu()
         opcao = input("Escolha uma opção: ").strip()
 
         match opcao:
             case "1": #cadastrar pessoa
-                pass
+                if not cadastrar_pessoa():
+                    print("\n[ERRO] Não foi possível cadastrar a pessoa!")
             case "2": #listar pessoa
-                pass
+                if not listar_pessoa():
+                    print("\n[ERRO] Não foi possível mostar a listagem!")
             case "3": # atualizar pessoa
-                pass
+                if not atualizar_pessoa():
+                    print("\n[ERRO] Não foi possível atualizar o cadastro!")
             case "4": #excluir pessoa
-                pass
+                if not excluir_pessoa():
+                    print("\n[ERRO] Não foi possível excluir o cadastro!")
             case "5": #buscar por nome
-                pass
+                if not buscar_pessoa_por_nome():
+                    print("\n[ERRO] Não foi possível fazer essa busca!")
             case "0": #Sair do sistema
                 print("Encerrando o sistema...")
                 break
