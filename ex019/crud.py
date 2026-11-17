@@ -67,7 +67,31 @@ def cadastrar_pessoa() -> bool:
         return False
 
 def listar_pessoa() -> bool:
-    pass
+    print("\n --- LISTAGEM COMPLETA DE PESSOAS CADASTRADAS --- ")
+    try:
+        with sqlite3.connect(NOME_BANCO) as db:
+            cur = db.cursor()
+            cur.execute("SELECT cod, nome, altura FROM pessoas ORDER BY nome;")
+            primeiro = cur.fetchone() #pega primeiro registro da seleção
+            if not primeiro:
+                print("[AVISO] Nenhum resultado foi encontrado!")
+                return True
+
+            print(f"\n" + "=" * 45)
+            print(f"{'CÓD':<6} {'NOME':<28} {'ALTURA':>8}")
+            print(f"-" * 45)
+
+            vcod, vnome, valtura = primeiro
+            print(f"{vcod:<6} {vnome:<28} {valtura:>8}m")
+
+            for vcod, vnome, valtura in cur:
+                print(f"{vcod:<6} {vnome:<28} {valtura:>8}m")
+
+            print(f"\n" + "=" * 45)
+        return True
+    except sqlite3.Error as erro:
+        print(f"[ERRO] Falha ao acessar o banco: {erro}")
+        return False
 
 def atualizar_pessoa() -> bool:
     pass
@@ -76,5 +100,37 @@ def excluir_pessoa() -> bool:
     pass
 
 def buscar_pessoa_por_nome() -> bool:
-    pass
+    print(f" --- BUSCA DE PESSOA POR NOME --- ")
+
+    termo = input("Digite o nome ou parte dele para a busca: ")
+    if not termo:
+        print("[AVISO] Nenhum termo foi informado!")
+        return False
+
+    try:
+        with sqlite3.connect(NOME_BANCO) as db:
+            cur = db.cursor()
+            cur.execute("SELECT cod, nome, altura FROM pessoas WHERE nome LIKE ? ORDER BY nome;", (f"%{termo}%",))
+
+            primeiro = cur.fetchone()  # pega primeiro registro da seleção
+            if not primeiro:
+                print("[AVISO] Nenhum resultado foi encontrado com '{termo}'")
+                return True
+
+            print(f"\n" + "=" * 45)
+            print(f"{'CÓD':<6} {'NOME':<28} {'ALTURA':>8}")
+            print(f"-" * 45)
+
+            vcod, vnome, valtura = primeiro
+            print(f"{vcod:<6} {vnome:<28} {valtura:>8}m")
+
+            for vcod, vnome, valtura in cur:
+                print(f"{vcod:<6} {vnome:<28} {valtura:>8}m")
+
+            print(f"\n" + "=" * 45)
+        return True
+
+    except sqlite3.Error as erro:
+        print(f"[ERRO] Falha ao buscar no banco: {erro}")
+        return False
 
